@@ -1,9 +1,17 @@
-<h1>Novo Post</h1>
+@extends('admin.layouts.app')
 
-<form method="post" action="{{ route('posts.store') }}">
+@section('title', 'Novo')    
 
-    @include('admin.posts.form')
+@section('content')
 
-    <button type="submit">Enviar</button>
+    <h1>Novo Post</h1>
 
-</form>
+    <form method="post" action="{{ route('posts.store') }}">
+
+        @include('admin.posts.form')
+
+        <button type="submit">Enviar</button>
+
+    </form>
+
+@endsection

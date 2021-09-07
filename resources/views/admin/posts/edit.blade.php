@@ -1,19 +1,27 @@
-<h1>Editar Post</h1>
+@extends('admin.layouts.app')
 
-@if ($errors->any())
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
+@section('title', 'Editar')    
 
-<form method="post" action="{{ route('posts.update', $post->id) }}">
+@section('content')
 
-    @method('put')
+    <h1>Editar Post</h1>
 
-    @include('admin.posts.form')
-    
-    <button type="submit">Enviar</button>
-    
-</form>
+    @if ($errors->any())
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+
+    <form method="post" action="{{ route('posts.update', $post->id) }}">
+
+        @method('put')
+
+        @include('admin.posts.form')
+        
+        <button type="submit">Enviar</button>
+        
+    </form>
+
+@endsection
