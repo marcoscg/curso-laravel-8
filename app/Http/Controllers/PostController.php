@@ -3,12 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Post;
 use App\Http\Requests\StoreUpdatePost;
 
+
 class PostController extends Controller
 {
+    /**
+     * 
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:web');  
+    }
+
     /**
      * 
      */
@@ -32,7 +43,19 @@ class PostController extends Controller
      */
     public function store(StoreUpdatePost $request)
     {
-        $post = Post::create($request->all());    
+        $data = $request->all();
+        
+        if ($request->image->isValid()) {
+            
+            $nameFile = Str::of($request->title)->slug('-') . '.' . $request->image->getClientOriginalExtension();
+
+            $file = $request->image->storeAs('posts', $nameFile);
+            
+            $data['image'] = $file;
+
+        }
+        
+        $post = Post::create($data);
         
         return redirect()->route('posts.index')->with('message', 'Post creado com sucesso!');;
         
@@ -61,6 +84,9 @@ class PostController extends Controller
 
         $post->delete();
 
+        if (Storage::exists($post->image))
+            Storage::delete($post->image);
+
         return redirect()->route('posts.index')->with('message', 'Post deletado com sucesso!');
     } 
     
@@ -84,7 +110,22 @@ class PostController extends Controller
         if(!$post = Post::find($id))
             return redirect()->route('posts.index');
 
-        $post->update($request->all());
+        $data = $request->all();
+    
+        if ($request->image && $request->image->isValid()) {
+            
+            if (Storage::exists($post->image))
+                Storage::delete($post->image);
+            
+            $nameFile = Str::of($request->title)->slug('-') . '.' . $request->image->getClientOriginalExtension();
+
+            $file = $request->image->storeAs('posts', $nameFile);
+            
+            $data['image'] = $file;
+
+        }
+
+        $post->update($data);
 
         return redirect()->route('posts.index')->with('message', 'Post atualizado com sucesso!');
 

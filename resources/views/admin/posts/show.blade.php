@@ -9,6 +9,7 @@
     <ul>
         <li>Título:  {{ $post->title }} </li>
         <li>Contéudo:  {{ $post->conteudo }} </li>
+        <img src="{{ url("storage/{$post->image}") }}" style="width: 100px;">
     </ul>
 
     <form action="{{ route('posts.destroy', $post->id) }}" method="post">

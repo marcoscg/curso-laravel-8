@@ -14,13 +14,11 @@
         </ul>
     @endif
 
-    <form method="post" action="{{ route('posts.update', $post->id) }}">
+    <form method="post" action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data">
 
         @method('put')
 
-        @include('admin.posts.form')
-        
-        <button type="submit">Enviar</button>
+        @include('admin.posts.form')        
         
     </form>
 

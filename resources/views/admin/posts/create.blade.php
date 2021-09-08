@@ -6,11 +6,9 @@
 
     <h1>Novo Post</h1>
 
-    <form method="post" action="{{ route('posts.store') }}">
+    <form method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
 
         @include('admin.posts.form')
-
-        <button type="submit">Enviar</button>
 
     </form>
 
