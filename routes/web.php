@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,12 @@ Route::get('/posts/create', [PostController::Class, 'create'])->name('posts.crea
 Route::get('/posts/edit/{id}', [PostController::Class, 'edit'])->name('posts.edit');
 Route::get('/posts/{id}', [PostController::Class, 'show'])->name('posts.show');
 Route::get('/posts', [PostController::Class, 'index'])->name('posts.index');
+
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::resource('/products', ProductController::Class);
+    Route::resource('/orders', OrderController::Class);
+});
 
 Route::get('/', function () {
     return view('welcome');

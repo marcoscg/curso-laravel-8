@@ -4,6 +4,10 @@ composer require laravel/breeze --dev
 
 php artisan make:model Post -mc
 
+php artisan make:model Product -mc
+
+php artisan make:model Order -mc
+
 php artisan migrate
 
 php artisan make:request StoreUpdatePost
